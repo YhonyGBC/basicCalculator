@@ -73,7 +73,8 @@ public class Calculator {
             op = sc.nextInt();
         } catch (Exception e) {
             System.out.println("Entrada inválida. Intente nuevamente.");
-            sc.nextLine(); // Limpiar el buffer del scanner
+            sc.nextLine(); 
+            op = -1;
         }
         return op;
     }
@@ -81,9 +82,9 @@ public class Calculator {
     private static void performOperation(int op) {
         if (op >= 1 && op <= 5) {
             System.out.println("Ingrese número 1:");
-            double n1 = sc.nextDouble();
+            double n1 = getValidatedNumber();
             System.out.println("Ingrese número 2:");
-            double n2 = sc.nextDouble();
+            double n2 = getValidatedNumber();
             ArithOp.ArithmeticOp pointer = getArithmeticOp(op);
             double res = pointer.operation(n1, n2);
             System.out.println(res);
@@ -93,17 +94,31 @@ public class Calculator {
     private static void performLambdaOperation(int op) {
         if (op >= 1 && op <= 5) {
             System.out.println("Ingrese número 1:");
-            double n1 = sc.nextDouble();
+            double n1 = getValidatedNumber();
             System.out.println("Ingrese número 2:");
-            double n2 = sc.nextDouble();
+            double n2 = getValidatedNumber();
             ArithOp.ArithmeticOp2 lambda = getLambda(op);
             if (n2 == 0 && op == 4) {
-                System.out.println("NO se permite la división por cero");
+                System.out.println("No se permite la división por cero");
             } else {
                 double res = lambda.lambda(n1, n2);
                 System.out.println(res);
             }
         }
+    }
+    
+    private static double getValidatedNumber() {
+        double number = 0;
+        while (true) {
+            try {
+                number = sc.nextDouble();
+                break; 
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Intente nuevamente.");
+                sc.nextLine(); 
+            }
+        }
+        return number;
     }
 
     private static ArithOp.ArithmeticOp getArithmeticOp(int op) {
